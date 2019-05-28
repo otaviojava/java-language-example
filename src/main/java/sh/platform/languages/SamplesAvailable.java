@@ -1,7 +1,7 @@
 package sh.platform.languages;
 
 public enum  SamplesAvailable {
-    MONGODB("MongoDBSample"),MYSQL("MySQLSample"),POSTGRESQL("PostgreSQLSample"),REDIS("RedisSample");
+    MONGODB("MongoDBSample.java"),MYSQL("MySQLSample.java"),POSTGRESQL("PostgreSQLSample.java"),REDIS("RedisSample.java");
 
     private final String file;
 

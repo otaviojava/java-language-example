@@ -9,7 +9,7 @@ public class JavaSource {
 
     public JavaSource(String source, String name) {
         this.source = source;
-        this.name = name;
+        this.name = name.split("\\.")[0];
     }
 
 
