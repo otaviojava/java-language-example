@@ -1,5 +1,3 @@
-package sh.platform.languages;
-
 import sh.platform.config.Config;
 import sh.platform.config.MySQL;
 import sh.platform.config.PostgreSQL;

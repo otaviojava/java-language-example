@@ -1,5 +1,3 @@
-package sh.platform.languages;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import sh.platform.config.Config;

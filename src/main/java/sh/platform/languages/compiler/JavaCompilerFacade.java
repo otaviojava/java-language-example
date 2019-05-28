@@ -1,6 +1,7 @@
 package sh.platform.languages.compiler;
 
 
+import sh.platform.languages.JavaSource;
 
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.security.PrivilegedAction;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ final class JavaCompilerFacade {
     private final JavaCompiler compiler;
     private final DiagnosticCollector<javax.tools.JavaFileObject> diagnosticCollector;
 
-    public JavaCompilerFacade(ClassLoader loader) {
+    JavaCompilerFacade(ClassLoader loader) {
         this.compiler = Optional.ofNullable(ToolProvider.getSystemJavaCompiler())
                 .orElseThrow(() -> new IllegalStateException("Cannot find the system Java compiler"));
 
@@ -39,18 +39,11 @@ final class JavaCompilerFacade {
         this.diagnosticCollector = new DiagnosticCollector<>();
     }
 
-    public <T> Optional<Class<? extends T>> apply(JavaSource<T> source) {
-        try {
-            return Optional.of(compile(source));
-        } catch (CompilerAccessException exp) {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, "Error when tries to optimizes the accessor", exp);
-            }
-            return Optional.empty();
-        }
+    public Class<?> apply(JavaSource source) {
+        return compile(source);
     }
 
-    private synchronized <T> Class<? extends T> compile(JavaSource<T> source) {
+    private synchronized Class<?> compile(JavaSource source) {
         JavaFileObject fileObject = new JavaFileObject(source.getSimpleName(), source.getJavaSource());
 
         JavaFileManager standardFileManager = compiler.getStandardFileManager(diagnosticCollector, null, null);
@@ -67,11 +60,7 @@ final class JavaCompilerFacade {
                     + JavaFileManager.class.getSimpleName() + " didn't close.", e);
         }
         try {
-            Class<T> compiledClass = (Class<T>) classLoader.loadClass(source.getName());
-            if (!source.getType().isAssignableFrom(compiledClass)) {
-                throw new CompilerAccessException("The generated compiledClass (" + compiledClass
-                        + ") cannot be assigned to the superclass/interface (" + source.getType() + ").");
-            }
+            Class<?> compiledClass = classLoader.loadClass(source.getName());
             return compiledClass;
         } catch (ClassNotFoundException e) {
             throw new CompilerAccessException("The generated class (" + source.getSimpleName()
@@ -80,7 +69,7 @@ final class JavaCompilerFacade {
 
     }
 
-    private <T> Class<? extends T> createCompilerErrorMessage(JavaSource<T> source) {
+    private Class<?> createCompilerErrorMessage(JavaSource source) {
         String compilationMessages = diagnosticCollector.getDiagnostics().stream()
                 .map(d -> d.getKind() + ":[" + d.getLineNumber() + "," + d.getColumnNumber() + "] "
                         + d.getMessage(null)
