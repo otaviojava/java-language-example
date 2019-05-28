@@ -22,7 +22,12 @@ public class SampleCodeSupplier implements Supplier<Map<SamplesAvailable, Sample
         for (SamplesAvailable available : SamplesAvailable.values()) {
             final String source = convert(available.getFile());
             final Object instance = compiler.apply(new JavaSource(source, available.getFile()));
-            cached.put(available, new SampleCode(source, instance));
+            try {
+                cached.put(available, new SampleCode(source, instance));
+            } catch (NoSuchMethodException e) {
+                throw new LanguageException("Error when load sample code", e);
+            }
+
         }
 
     }
