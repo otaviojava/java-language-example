@@ -21,22 +21,18 @@
   ],
   "mongodb": [
     {
-      "username": "",
       "hostname": "localhost",
       "host": "localhost",
       "path": "people",
-      "password": "",
-      "port": 5432
+      "port": 27017
     }
   ],
   "redis": [
     {
-      "username": "postgres",
       "hostname": "localhost",
       "host": "localhost",
       "path": "people",
-      "password": "password",
-      "port": 5432
+      "port": 6379
     }
   ]
 }

@@ -1,47 +1,30 @@
 package sh.platform.languages;
 
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import sh.platform.config.Config;
-import sh.platform.config.MySQL;
+import sh.platform.config.MongoDB;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static com.mongodb.client.model.Filters.eq;
 
 public class MongoDBSample {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args)  {
         Config config = new Config();
-        MySQL database = config.getCredential("mongodb", MySQL::new);
-        DataSource dataSource = database.get();
+        MongoDB database = config.getCredential("mongodb", MongoDB::new);
+        MongoClient mongoClient = database.get();
+        final MongoDatabase mongoDatabase = mongoClient.getDatabase(database.getDatabase());
+        MongoCollection<Document> collection = mongoDatabase.getCollection("scientist");
+        Document doc = new Document("name", "Ada Lovelace")
+                .append("city", "London");
 
-        try (Connection connection = dataSource.getConnection()) {
-            String sql = "CREATE TABLE JAVA_PEOPLE (" +
-                    " id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY," +
-                    "name VARCHAR(30) NOT NULL," +
-                    "city VARCHAR(30) NOT NULL)";
+        collection.insertOne(doc);
+        Document myDoc = collection.find(eq("_id", doc.get("_id"))).first();
+        System.out.println(myDoc.toJson());
+        collection.deleteOne(eq("_id", doc.get("_id")));
 
-            final Statement statement = connection.createStatement();
-            statement.execute(sql);
-            // Insert data.
-            sql = "INSERT INTO JAVA_PEOPLE (name, city) VALUES" +
-                    "('Neil Armstrong', 'Moon')," +
-                    "('Buzz Aldrin', 'Glen Ridge')," +
-                    "('Sally Ride', 'La Jolla')";
-
-            statement.execute(sql);
-            // Show table.
-            sql = "SELECT * FROM JAVA_PEOPLE";
-            final ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String city = resultSet.getString("city");
-                System.out.println(String.format("the id %d the name %s and city %s", id, name, city));
-            }
-            statement.execute("DROP TABLE JAVA_PEOPLE");
-        }
     }
 }
