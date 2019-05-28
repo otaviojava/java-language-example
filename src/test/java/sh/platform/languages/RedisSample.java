@@ -1,9 +1,10 @@
+package sh.platform.languages;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import sh.platform.config.Config;
 import sh.platform.config.Redis;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 public class RedisSample {
