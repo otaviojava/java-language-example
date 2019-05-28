@@ -14,7 +14,7 @@ services:
     networks:
       - javanet
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: people
     ports:
       - 3306:3306
@@ -24,7 +24,7 @@ services:
     networks:
       - javanet
     environment:
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: people
     ports:
       - 5432:5432

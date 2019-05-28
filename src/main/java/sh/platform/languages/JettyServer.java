@@ -7,7 +7,6 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
-import static java.lang.System.getProperty;
 import static java.util.Optional.ofNullable;
 
 class JettyServer {
