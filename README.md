@@ -1,6 +1,7 @@
 # Java language script
 
-### Run as Docker-Compose
+
+### Run Locally with Docker-compose
 
 #### Start fresh environment
 

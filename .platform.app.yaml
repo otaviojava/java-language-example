@@ -14,4 +14,4 @@ relationships:
 
 web:
   commands:
-    start:  java -jar -Djetty.port=$PORT target/languages-jar-with-dependencies.jarqqq
+    start:  java -jar -Djetty.port=$PORT target/java-language-example-jar-with-dependencies.jar
