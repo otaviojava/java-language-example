@@ -10,15 +10,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class SampleCodeSupplier implements Supplier<Map<SamplesAvailable, SampleCode>> {
+
+    private static final Logger LOGGER = Logger.getLogger(SampleCodeSupplier.class.getName());
 
     private final JavaCompilerProvider compiler = new JavaCompilerProvider();
 
     private final Map<SamplesAvailable, SampleCode> cached = new EnumMap<>(SamplesAvailable.class);
 
     {
+        LOGGER.info("Starting the compilation process");
         for (SamplesAvailable available : SamplesAvailable.values()) {
             final String source = convert(available.getFile());
             final Object instance = compiler.apply(new JavaSource(source, available.getFile()));
@@ -27,8 +31,8 @@ public class SampleCodeSupplier implements Supplier<Map<SamplesAvailable, Sample
             } catch (NoSuchMethodException e) {
                 throw new LanguageException("Error when load sample code", e);
             }
-
         }
+        LOGGER.info("Done the compilation process");
 
     }
 

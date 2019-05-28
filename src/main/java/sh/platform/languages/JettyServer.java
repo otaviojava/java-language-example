@@ -7,9 +7,14 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
+import java.util.logging.Logger;
+
+import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 
 class JettyServer {
+
+    private static final Logger LOGGER = Logger.getLogger(JettyServer.class.getName());
 
     private static final int DEFAULT_MAX_THREADS = 100;
     private static final int DEFAULT_MIN_THREADS = 10;
@@ -30,20 +35,24 @@ class JettyServer {
         int minThreads = getProperty(MIN_THREADS, DEFAULT_MIN_THREADS);
         int idleTimeout = getProperty(IDLE, DEFAULT_IDLE);
         int port = getProperty(PORT, DEFAULT_PORT);
+        LOGGER.info(format("Starting the Jetty server with  %d max threads, %d min threads, %d idle, %d port",
+                maxThreads, minThreads, idleTimeout, port));
+
+        LOGGER.info("Available services: " + SamplesAvailable.getOptions());
 
         QueuedThreadPool threadPool = new QueuedThreadPool(maxThreads, minThreads, idleTimeout);
 
         server = new Server(threadPool);
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(port);
-        server.setConnectors(new Connector[] { connector });
+        server.setConnectors(new Connector[]{connector});
 
         ServletHandler servletHandler = new ServletHandler();
         server.setHandler(servletHandler);
 
         servletHandler.addServletWithMapping(SampleServlet.class, "/java/*");
         server.start();
-
+        LOGGER.info("Jetty server ready");
     }
 
     private Integer getProperty(String key, int defaultValue) {
