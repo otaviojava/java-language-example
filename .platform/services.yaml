@@ -1,3 +1,17 @@
-database:
-    type: mysql:10.2
+# This file defines services you want available to your application.
+
+mongodb:
+    type: mongodb:3.6
     disk: 1024
+    size: S
+mysql:
+    type: mysql:10.2
+    disk: 256
+    size: S
+postgresql:
+    type: postgresql:11
+    disk: 256
+    size: S
+redis:
+    type: redis:5.0
+    size: S
