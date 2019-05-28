@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 import static java.util.Optional.ofNullable;
 
@@ -12,7 +11,7 @@ public class SampleServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3462096228274971485L;
 
-    private static final Map<SamplesAvailable, SampleCode> SAMPLES = new SampleCodeSupplier().get();
+    ;
 
     @Override
     protected void doGet(HttpServletRequest reqest, HttpServletResponse response)
@@ -46,7 +45,7 @@ public class SampleServlet extends HttpServlet {
     }
 
     private void showSampleCode(HttpServletResponse response, SamplesAvailable key) throws IOException {
-        final SampleCode sampleCode = SAMPLES.get(key);
+        final SampleCode sampleCode = SamplesAvailable.getSample(key);
         if (sampleCode.executeWithSuccess()) {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("text/plain");
