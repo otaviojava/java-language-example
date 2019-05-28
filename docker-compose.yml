@@ -2,15 +2,15 @@ version:  '3.2'
 
 services:
 
-  key-value:
-    image: "redis"
+  redis:
+    image: "redis:latest"
     networks:
       - javanet
     ports:
       - 6379:6379
 
-  column:
-    image: "mysql"
+  mysql:
+    image: "mysql:latest"
     networks:
       - javanet
     environment:
@@ -19,7 +19,17 @@ services:
     ports:
       - 3306:3306
 
-  document:
+  postgresql:
+    image: "postgres:latest"
+    networks:
+      - javanet
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: people
+    ports:
+      - 5432:5432
+
+  mongo:
     image: "mongo:latest"
     networks:
       - javanet
