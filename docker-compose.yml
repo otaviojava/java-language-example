@@ -1,0 +1,32 @@
+version:  '3.2'
+
+services:
+
+  key-value:
+    image: "redis"
+    networks:
+      - javanet
+    ports:
+      - 6379:6379
+
+  column:
+    image: "mysql"
+    networks:
+      - javanet
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: people
+    ports:
+      - 3306:3306
+
+  document:
+    image: "mongo:latest"
+    networks:
+      - javanet
+    ports:
+      - 27017:27017
+
+
+
+networks:
+  javanet:

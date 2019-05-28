@@ -4,10 +4,14 @@ type: "java:8"
 disk: 1024
 
 hooks:
-    build: mvn clean install
-    
+  build: mvn clean install
+
 relationships:
-    database: "database:mysql"
+  database: 'mysql:mysql'
+  postgresql: 'postgresql:postgresql'
+  mongodb: 'mongodb:mongodb'
+  redis: 'redis:redis'
+
 web:
-    commands:
-        start:  java -jar target/spring-mvc-mysql-0.0.1.jar --server.port=$PORT
+  commands:
+    start:  java -jar target/spring-mvc-mysql-0.0.1.jar --server.port=$PORT
