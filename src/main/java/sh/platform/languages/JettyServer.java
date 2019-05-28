@@ -41,7 +41,7 @@ class JettyServer {
         ServletHandler servletHandler = new ServletHandler();
         server.setHandler(servletHandler);
 
-        servletHandler.addServletWithMapping(SampleServlet.class, "/*");
+        servletHandler.addServletWithMapping(SampleServlet.class, "/java/*");
         server.start();
 
     }

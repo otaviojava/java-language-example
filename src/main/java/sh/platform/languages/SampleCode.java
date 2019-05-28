@@ -9,7 +9,7 @@ final class SampleCode {
     private static final Logger LOGGER = Logger.getLogger(SampleCode.class.getName());
 
     private static final Class[] ARG = new Class[]{String[].class};
-    private static final String[] NO_ARGS = new String[0];
+    private static final Object NO_ARGS = new String[0];
 
     private final String source;
 
