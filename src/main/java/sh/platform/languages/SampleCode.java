@@ -49,6 +49,5 @@ final class SampleCode {
             return false;
         }
 
-
     }
 }
