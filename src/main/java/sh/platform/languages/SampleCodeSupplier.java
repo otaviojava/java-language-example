@@ -15,7 +15,6 @@ public class SampleCodeSupplier implements Supplier<Map<SamplesAvailable, Sample
 
     private static final Logger LOGGER = Logger.getLogger(SampleCodeSupplier.class.getName());
 
-
     private final Map<SamplesAvailable, SampleCode> cached = new EnumMap<>(SamplesAvailable.class);
 
     {

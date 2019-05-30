@@ -7,11 +7,9 @@ import org.bson.Document;
 import sh.platform.config.Config;
 import sh.platform.config.MongoDB;
 
-import java.util.function.Consumer;
-
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoDBSample implements Consumer<Void> {
+public class MongoDBSample {
 
     public static void main(String[] args) {
 
@@ -34,8 +32,4 @@ public class MongoDBSample implements Consumer<Void> {
 
     }
 
-    @Override
-    public void accept(Void aVoid) {
-        MongoDBSample.main(new String[0]);
-    }
 }

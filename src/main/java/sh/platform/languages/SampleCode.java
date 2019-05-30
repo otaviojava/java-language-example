@@ -1,6 +1,7 @@
 package sh.platform.languages;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,19 +29,17 @@ final class SampleCode {
         return source;
     }
 
-
     /**
      * Executes the public static void main method if it runs with success it will return true otherwise false.
      * @return true if executes without throw exception otherwise false
      */
-    public boolean executeWithSuccess() {
+    public Optional<Exception> execute() {
         try {
             mainMethod.invoke(null, NO_ARGS);
-            return true;
+            return Optional.empty();
         } catch (Exception exp) {
             LOGGER.log(Level.SEVERE, "an error happened when executing the demo code", exp);
-            return false;
+            return Optional.of(exp);
         }
-
     }
 }

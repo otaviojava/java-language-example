@@ -29,3 +29,4 @@ public class RedisSample {
         jedis.del("cities");
     }
 }
+
