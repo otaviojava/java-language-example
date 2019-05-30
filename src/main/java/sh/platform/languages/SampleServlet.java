@@ -19,36 +19,36 @@ public class SampleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        final String pathInfo = ofNullable(request.getPathInfo()).orElse("");
+        final String pathInfo = ofNullable(request.getPathInfo()).orElse("/");
         switch (pathInfo) {
             case "/":
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().println(SamplesAvailable.getOptions());
+                response.getWriter().println(SampleCodeType.getOptions());
                 return;
             case "/postgresql":
-                showSampleCode(response, SamplesAvailable.POSTGRESQL);
+                showSampleCode(response, SampleCodeType.POSTGRESQL);
                 return;
             case "/mysql":
-                showSampleCode(response, SamplesAvailable.MYSQL);
+                showSampleCode(response, SampleCodeType.MYSQL);
                 return;
             case "/mongodb":
-                showSampleCode(response, SamplesAvailable.MONGODB);
+                showSampleCode(response, SampleCodeType.MONGODB);
                 return;
             case "/redis":
-                showSampleCode(response, SamplesAvailable.REDIS);
+                showSampleCode(response, SampleCodeType.REDIS);
                 return;
             case "/postgresql/output":
-                executeCode(response, SamplesAvailable.POSTGRESQL);
+                executeCode(response, SampleCodeType.POSTGRESQL);
                 return;
             case "/mysql/output":
-                executeCode(response, SamplesAvailable.MYSQL);
+                executeCode(response, SampleCodeType.MYSQL);
                 return;
             case "/mongodb/output":
-                executeCode(response, SamplesAvailable.MONGODB);
+                executeCode(response, SampleCodeType.MONGODB);
                 return;
             case "/redis/output":
-                executeCode(response, SamplesAvailable.REDIS);
+                executeCode(response, SampleCodeType.REDIS);
             default:
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 response.setContentType("text/plain");
@@ -56,21 +56,21 @@ public class SampleServlet extends HttpServlet {
         }
     }
 
-    private void showSampleCode(HttpServletResponse response, SamplesAvailable key) throws IOException {
-        final SampleCode sampleCode = SamplesAvailable.getSample(key);
+    private void showSampleCode(HttpServletResponse response, SampleCodeType key) throws IOException {
+        final SampleCode sampleCode = SampleCodeType.getSample(key);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("text/plain");
         response.getWriter().println(sampleCode.getSource());
 
     }
 
-    private synchronized void executeCode(HttpServletResponse response, SamplesAvailable key) throws IOException {
+    private synchronized void executeCode(HttpServletResponse response, SampleCodeType key) throws IOException {
         PrintStream previous = System.out;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         PrintStream custom = new PrintStream(stream);
         System.setOut(custom);
 
-        final SampleCode sampleCode = SamplesAvailable.getSample(key);
+        final SampleCode sampleCode = SampleCodeType.getSample(key);
         final Optional<Exception> errorMessage = sampleCode.execute();
         System.setOut(previous);
         response.setContentType("text/plain");
