@@ -43,7 +43,7 @@ public class PostgreSQLSample {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                System.out.println(String.format("the id %d the name %s ", id, name));
+                System.out.println(String.format("the JAVA_FRAMEWORKS id %d the name %s ", id, name));
             }
             statement.execute("DROP TABLE JAVA_FRAMEWORKS");
         }

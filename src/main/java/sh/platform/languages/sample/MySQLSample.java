@@ -45,7 +45,7 @@ public class MySQLSample {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String city = resultSet.getString("city");
-                System.out.println(String.format("the id %d the name %s and city %s", id, name, city));
+                System.out.println(String.format("the JAVA_PEOPLE id %d the name %s and city %s", id, name, city));
             }
             statement.execute("DROP TABLE JAVA_PEOPLE");
         }
