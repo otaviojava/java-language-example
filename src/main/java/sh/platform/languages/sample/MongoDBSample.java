@@ -7,12 +7,15 @@ import org.bson.Document;
 import sh.platform.config.Config;
 import sh.platform.config.MongoDB;
 
+import java.util.function.Supplier;
+
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoDBSample {
+public class MongoDBSample implements Supplier<String> {
 
-    public static void main(String[] args) {
-
+    @Override
+    public String get() {
+        StringBuilder logger = new StringBuilder();
         // Create a new config object to ease reading the Platform.sh environment variables.
         // You can alternatively use getenv() yourself.
         Config config = new Config();
@@ -27,9 +30,8 @@ public class MongoDBSample {
 
         collection.insertOne(doc);
         Document myDoc = collection.find(eq("_id", doc.get("_id"))).first();
-        System.out.println(myDoc.toJson());
-        collection.deleteOne(eq("_id", doc.get("_id")));
-
+        logger.append(myDoc.toJson()).append('\n');
+        logger.append(collection.deleteOne(eq("_id", doc.get("_id"))));
+        return logger.toString();
     }
-
 }
