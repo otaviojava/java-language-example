@@ -7,10 +7,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public enum SamplesAvailable {
-    MONGODB("MongoDBSample.java", "MongoDB"),
-    MYSQL("MySQLSample.java", "MySQL"),
-    POSTGRESQL("PostgreSQLSample.java", "PostgreSQL"),
-    REDIS("RedisSample.java", "Redis");
+    MONGODB("sh/platform/languages/sample/MongoDBSample.java", "MongoDB"),
+    MYSQL("sh/platform/languages/sample/MySQLSample.java", "MySQL"),
+    POSTGRESQL("sh/platform/languages/sample/PostgreSQLSample.java", "PostgreSQL"),
+    REDIS("sh/platform/languages/sample/RedisSample.java", "Redis");
 
     private final String file;
     private final String name;

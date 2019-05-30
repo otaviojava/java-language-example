@@ -1,4 +1,4 @@
-package sh.platform.languages;
+package sh.platform.languages.sample;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
