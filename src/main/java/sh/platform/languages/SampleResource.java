@@ -49,11 +49,11 @@ public class SampleResource {
                 String message = sampleCode.execute();
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.TEXT_PLAIN);
-                new ResponseEntity<>(message, headers, HttpStatus.OK);
+                return new ResponseEntity<>(message, headers, HttpStatus.OK);
             } catch (Exception exp) {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.TEXT_PLAIN);
-                new ResponseEntity<>(exp.getMessage(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(exp.getMessage(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         return notFound();
