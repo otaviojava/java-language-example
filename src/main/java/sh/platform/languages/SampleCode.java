@@ -30,8 +30,9 @@ final class SampleCode {
     }
 
     /**
-     * Executes the public static void main method if it runs with success it will return true otherwise false.
-     * @return true if executes without throw exception otherwise false
+     * Executes the public static void main method that might return an exception on execution.
+     *
+     * @return An exception or {@link Optional#empty()} if executed with success
      */
     public Optional<Exception> execute() {
         try {
