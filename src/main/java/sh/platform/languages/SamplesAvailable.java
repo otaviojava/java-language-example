@@ -38,7 +38,7 @@ public enum SamplesAvailable {
 
 
     public String getFile() {
-        return demoClass.getSimpleName();
+        return demoClass.getSimpleName() + ".java";
     }
 
     public Class<?> getDemoClass() {
