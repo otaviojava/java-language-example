@@ -1,8 +1,6 @@
 package sh.platform.languages;
 
-import java.lang.reflect.Method;
-import java.util.Optional;
-import java.util.logging.Level;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 /**
@@ -13,34 +11,20 @@ import java.util.logging.Logger;
 final class SampleCode {
     private static final Logger LOGGER = Logger.getLogger(SampleCode.class.getName());
 
-    private static final Class[] ARG = new Class[]{String[].class};
-    private static final Object NO_ARGS = new String[0];
-
     private final String source;
 
-    private final Method mainMethod;
+    private final Supplier<String> demoClass;
 
-    SampleCode(String source, Class<?> demoClass) throws NoSuchMethodException {
+    SampleCode(String source, Supplier<String> demoClass)  {
         this.source = source;
-        this.mainMethod = demoClass.getDeclaredMethod("main", ARG);
+        this.demoClass = demoClass;
     }
 
     public String getSource() {
         return source;
     }
 
-    /**
-     * Executes the public static void main method that might return an exception on execution.
-     *
-     * @return An exception or {@link Optional#empty()} if executed with success
-     */
-    public Optional<Exception> execute() {
-        try {
-            mainMethod.invoke(null, NO_ARGS);
-            return Optional.empty();
-        } catch (Exception exp) {
-            LOGGER.log(Level.SEVERE, "an error happened when executing the demo code", exp);
-            return Optional.of(exp);
-        }
+    public String execute() {
+        return demoClass.get();
     }
 }

@@ -64,26 +64,16 @@ public class SampleServlet extends HttpServlet {
 
     }
 
-    private synchronized void executeCode(HttpServletResponse response, SampleCodeType key) throws IOException {
-        PrintStream previous = System.out;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        PrintStream custom = new PrintStream(stream);
-        System.setOut(custom);
-
+    private void executeCode(HttpServletResponse response, SampleCodeType key) throws IOException {
         final SampleCode sampleCode = SampleCodeType.getSample(key);
-        final Optional<Exception> errorMessage = sampleCode.execute();
-        System.setOut(previous);
         response.setContentType("text/plain");
-
-        if (errorMessage.isPresent()) {
-            final Exception exception = errorMessage.get();
-            final String message = exception.getMessage();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().println(message);
-        } else {
-            final String message = new String(stream.toByteArray(), StandardCharsets.UTF_8);
+        try {
+            String message = sampleCode.execute();
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().println(message);
+        } catch (Exception exp) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().println(exp.getMessage());
         }
     }
 }

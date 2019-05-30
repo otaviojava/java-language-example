@@ -21,11 +21,7 @@ public class SampleCodeSupplier implements Supplier<Map<SampleCodeType, SampleCo
         LOGGER.info("Starting the loading SampleCodeType process");
         for (SampleCodeType available : SampleCodeType.values()) {
             final String source = convert(available.getFile());
-            try {
-                cached.put(available, new SampleCode(source, available.getDemoClass()));
-            } catch (NoSuchMethodException e) {
-                throw new LanguageException("Error when load sample code", e);
-            }
+            cached.put(available, new SampleCode(source, available.getDemoClass()));
         }
         LOGGER.info("Loading process complete.");
 

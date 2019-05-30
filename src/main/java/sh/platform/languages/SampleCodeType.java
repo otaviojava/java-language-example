@@ -10,15 +10,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public enum SampleCodeType {
 
-    MONGODB(MongoDBSample.class, "MongoDB"),
-    MYSQL(MySQLSample.class, "MySQL"),
-    POSTGRESQL(PostgreSQLSample.class, "PostgreSQL"),
-    REDIS(RedisSample.class, "Redis");
+    MONGODB(new MongoDBSample(), "MongoDB"),
+    MYSQL(new MySQLSample(), "MySQL"),
+    POSTGRESQL(new PostgreSQLSample(), "PostgreSQL"),
+    REDIS(new RedisSample(), "Redis");
 
-    private final Class<?> demoClass;
+    private final Supplier<String> demoClass;
     private final String name;
     private static final String JSON;
     private static final Map<SampleCodeType, SampleCode> SAMPLES;
@@ -32,17 +33,17 @@ public enum SampleCodeType {
         SAMPLES = new SampleCodeSupplier().get();
     }
 
-    SampleCodeType(Class<?> demoClass, String name) {
+    SampleCodeType(Supplier<String> demoClass, String name) {
         this.demoClass = demoClass;
         this.name = name;
     }
 
 
     public String getFile() {
-        return demoClass.getSimpleName() + ".java";
+        return demoClass.getClass().getSimpleName() + ".java";
     }
 
-    public Class<?> getDemoClass() {
+    public Supplier<String> getDemoClass() {
         return demoClass;
     }
 
