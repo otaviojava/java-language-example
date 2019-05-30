@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -66,18 +67,23 @@ public class SampleServlet extends HttpServlet {
     private synchronized void executeCode(HttpServletResponse response, SamplesAvailable key) throws IOException {
         PrintStream previous = System.out;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream custom = new PrintStream(stream);
+        System.setOut(custom);
 
         final SampleCode sampleCode = SamplesAvailable.getSample(key);
         final Optional<Exception> errorMessage = sampleCode.execute();
+        System.setOut(previous);
         response.setContentType("text/plain");
+
         if (errorMessage.isPresent()) {
             final Exception exception = errorMessage.get();
             final String message = exception.getMessage();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().println(message);
         } else {
+            final String message = new String(stream.toByteArray(), StandardCharsets.UTF_8);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().println(sampleCode.getSource());
+            response.getWriter().println(message);
         }
     }
 }
