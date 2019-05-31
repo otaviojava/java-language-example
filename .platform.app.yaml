@@ -11,6 +11,9 @@ relationships:
   postgresql: 'postgresql:postgresql'
   mongodb: 'mongodb:mongodb'
   redis: 'redis:redis'
+  elasticsearch: 'elasticsearch:elasticsearch'
+  memcached: 'memcached:memcached'
+  solr: 'solr:solr'
 
 web:
   commands:
