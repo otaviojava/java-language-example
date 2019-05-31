@@ -34,5 +34,29 @@
       "path": "people",
       "port": 6379
     }
+  ],
+  "elasticsearch": [
+    {
+      "hostname": "localhost",
+      "host": "localhost",
+      "path": "people",
+      "port": 9200
+    }
+  ],
+  "memcached": [
+    {
+      "hostname": "localhost",
+      "host": "localhost",
+      "path": "people",
+      "port": 11211
+    }
+  ],
+  "sorl": [
+    {
+      "hostname": "localhost",
+      "host": "localhost",
+      "path": "people",
+      "port": 8983
+    }
   ]
 }

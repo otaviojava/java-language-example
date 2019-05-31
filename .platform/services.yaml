@@ -15,3 +15,14 @@ postgresql:
 redis:
     type: redis:5.0
     size: S
+elasticsearch:
+    type: elasticsearch:5.4
+    disk: 256
+    size: S
+memcached:
+    type: memcached:1.4
+    size: S
+solr:
+    type: solr:7.6
+    disk: 256
+    size: S
