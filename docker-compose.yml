@@ -36,6 +36,28 @@ services:
     ports:
       - 27017:27017
 
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.4.1"
+    networks:
+      - javanet
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  sorl:
+    image: "solr:latest"
+    networks:
+      - javanet
+    ports:
+      - 8983:8983
+
+  memcached:
+    image: "memcached:latest"
+    networks:
+      - javanet
+    ports:
+      - 11211:11211
+
 
 
 networks:
