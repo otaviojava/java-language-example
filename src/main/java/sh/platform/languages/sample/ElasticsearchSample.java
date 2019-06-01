@@ -41,7 +41,6 @@ public class ElasticsearchSample implements Supplier<String> {
         try {
 
             String index = "animals";
-            String type = "mammals";
             // Index a few document.
             final List<String> animals = Arrays.asList("dog", "cat", "monkey", "horse");
             for (String animal : animals) {
@@ -50,7 +49,8 @@ public class ElasticsearchSample implements Supplier<String> {
                 jsonMap.put("age", current().nextInt(1, 10));
                 jsonMap.put("is cute?", current().nextBoolean());
 
-                IndexRequest indexRequest = new IndexRequest(index, type, animal).source(jsonMap);
+                IndexRequest indexRequest = new IndexRequest(index)
+                        .id(animal).source(jsonMap);
                 client.index(indexRequest, RequestOptions.DEFAULT);
 
             }
@@ -62,7 +62,7 @@ public class ElasticsearchSample implements Supplier<String> {
 
             // Search for documents.
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-            sourceBuilder.query(QueryBuilders.termQuery("body", "dog"));
+            sourceBuilder.query(QueryBuilders.termQuery("name", "dog"));
             SearchRequest searchRequest = new SearchRequest();
             searchRequest.indices(index);
             searchRequest.source(sourceBuilder);
@@ -77,7 +77,7 @@ public class ElasticsearchSample implements Supplier<String> {
 
             // Delete documents.
             for (String animal : animals) {
-                client.delete(new DeleteRequest(index, type, animal), RequestOptions.DEFAULT);
+                client.delete(new DeleteRequest(index).id(animal), RequestOptions.DEFAULT);
 
             }
         } catch (IOException exp) {

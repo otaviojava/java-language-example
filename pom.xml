@@ -27,6 +27,7 @@
         <mongo.version>3.8.2</mongo.version>
         <mysql.version>8.0.16</mysql.version>
         <postgresql.version>42.2.5</postgresql.version>
+        <elasticsearch.version>7.1.0</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -62,7 +63,7 @@
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.1.1</version>
+            <version>7.1.0</version>
         </dependency>
         <dependency>
             <groupId>net.spy</groupId>

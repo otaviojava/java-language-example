@@ -22,8 +22,8 @@ public class MemcachedSample implements Supplier<String> {
 
         final MemcachedClient client = memcached.get();
 
-        String key = "Deploy day with Java";
-        String value = "Friday";
+        String key = "cloud";
+        String value = "platformsh";
 
         // Set a value.
         client.set(key, 0, value);
@@ -31,8 +31,7 @@ public class MemcachedSample implements Supplier<String> {
         // Read it back.
         Object test = client.get(key);
 
-        logger.append(String.format("Found value <strong>%s</strong> " +
-                "for key <strong>%s</strong>.", test, key));
+        logger.append(String.format("Found value %s for key %s.", test, key));
 
         return logger.toString();
     }

@@ -13,3 +13,6 @@
 
 ####  List services
 `docker-compose -f docker-compose.yml ps`
+
+
+ docker exec -it --user=solr java-languages_sorl_1 bin/solr create_core -c people
