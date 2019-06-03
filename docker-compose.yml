@@ -41,7 +41,7 @@ services:
     networks:
       - javanet
     environment:
-      - discovery: " type=single-node"
+      - discovery="type=single-node"
     ports:
       - 9200:9200
       - 9300:9300
