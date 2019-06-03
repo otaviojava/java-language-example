@@ -78,7 +78,7 @@ public class ElasticsearchSample implements Supplier<String> {
 
             // Delete documents.
             for (String animal : animals) {
-                client.delete(new DeleteRequest(index).id(animal), RequestOptions.DEFAULT);
+                client.delete(new DeleteRequest(index, type, animal), RequestOptions.DEFAULT);
 
             }
         } catch (IOException exp) {
