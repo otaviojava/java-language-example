@@ -73,7 +73,7 @@ public class ElasticsearchSample implements Supplier<String> {
             for (SearchHit hit : search.getHits()) {
                 String id = hit.getId();
                 final Map<String, Object> source = hit.getSourceAsMap();
-                logger.append(String.format("result id %s source: %s", id, source));
+                logger.append(String.format("result id %s source: %s", id, source)).append('\n');
             }
 
             // Delete documents.
