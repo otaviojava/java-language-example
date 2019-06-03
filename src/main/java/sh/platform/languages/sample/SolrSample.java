@@ -27,7 +27,6 @@ public class SolrSample implements Supplier<String> {
 
         Solr sorl = config.getCredential("solr", Solr::new);
 
-
         try {
 
             final HttpSolrClient solrClient = sorl.get();

@@ -36,4 +36,3 @@ public class MemcachedSample implements Supplier<String> {
         return logger.toString();
     }
 }
-

@@ -53,7 +53,6 @@ public class ElasticsearchSample implements Supplier<String> {
                 IndexRequest indexRequest = new IndexRequest(index, type)
                         .id(animal).source(jsonMap);
                 client.index(indexRequest, RequestOptions.DEFAULT);
-
             }
 
             RefreshRequest refresh = new RefreshRequest(index);
@@ -79,7 +78,6 @@ public class ElasticsearchSample implements Supplier<String> {
             // Delete documents.
             for (String animal : animals) {
                 client.delete(new DeleteRequest(index, type, animal), RequestOptions.DEFAULT);
-
             }
         } catch (IOException exp) {
             throw new RuntimeException("An error when execute Elasticsearch: " + exp.getMessage());
