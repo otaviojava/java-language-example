@@ -51,7 +51,7 @@
       "port": 11211
     }
   ],
-  "sorl": [
+  "solr": [
     {
       "hostname": "localhost",
       "host": "localhost",

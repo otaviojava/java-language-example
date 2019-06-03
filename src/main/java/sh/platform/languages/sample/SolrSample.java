@@ -25,7 +25,7 @@ public class SolrSample implements Supplier<String> {
         // You can alternatively use getenv() yourself.
         Config config = new Config();
 
-        Solr sorl = config.getCredential("sorl", Solr::new);
+        Solr sorl = config.getCredential("solr", Solr::new);
 
 
         try {
