@@ -55,7 +55,7 @@
     {
       "hostname": "localhost",
       "host": "localhost",
-      "path": "people",
+      "path": "solr/people",
       "port": 8983
     }
   ]
