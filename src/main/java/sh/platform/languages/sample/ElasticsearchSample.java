@@ -41,7 +41,7 @@ public class ElasticsearchSample implements Supplier<String> {
         try {
 
             String index = "animals";
-            String type = "People";
+            String type = "mammals";
             // Index a few document.
             final List<String> animals = Arrays.asList("dog", "cat", "monkey", "horse");
             for (String animal : animals) {
@@ -56,7 +56,7 @@ public class ElasticsearchSample implements Supplier<String> {
 
             }
 
-            RefreshRequest refresh = new RefreshRequest(index, type);
+            RefreshRequest refresh = new RefreshRequest(index);
 
             // Force just-added items to be indexed
             RefreshResponse refreshResponse = client.indices().refresh(refresh, RequestOptions.DEFAULT);
