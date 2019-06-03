@@ -41,6 +41,7 @@ public class ElasticsearchSample implements Supplier<String> {
         try {
 
             String index = "animals";
+            String type = "People";
             // Index a few document.
             final List<String> animals = Arrays.asList("dog", "cat", "monkey", "horse");
             for (String animal : animals) {
@@ -49,13 +50,13 @@ public class ElasticsearchSample implements Supplier<String> {
                 jsonMap.put("age", current().nextInt(1, 10));
                 jsonMap.put("is cute?", current().nextBoolean());
 
-                IndexRequest indexRequest = new IndexRequest(index)
+                IndexRequest indexRequest = new IndexRequest(index, type)
                         .id(animal).source(jsonMap);
                 client.index(indexRequest, RequestOptions.DEFAULT);
 
             }
 
-            RefreshRequest refresh = new RefreshRequest(index);
+            RefreshRequest refresh = new RefreshRequest(index, type);
 
             // Force just-added items to be indexed
             RefreshResponse refreshResponse = client.indices().refresh(refresh, RequestOptions.DEFAULT);
