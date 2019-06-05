@@ -16,12 +16,6 @@ import java.util.Optional;
 @RequestMapping("java")
 public class SampleResource {
 
-    @GetMapping
-    public ResponseEntity<String> getOptions() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(SampleCodeType.getOptions(), headers, HttpStatus.OK);
-    }
 
     @GetMapping("{id}")
     public ResponseEntity<String> getSource(@PathVariable("id") String id) {
