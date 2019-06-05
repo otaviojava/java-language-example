@@ -44,30 +44,25 @@ public class SampleResource {
     @GetMapping("{id}/output")
     public ResponseEntity<String> getExecuteCode(@PathVariable("id") String id) {
         final Optional<SampleCodeType> codeType = SampleCodeType.parse(id.toUpperCase(Locale.US));
-
-        if (codeType.isPresent()) {
-            final SampleCode sampleCode = SampleCodeType.getSample(codeType.get());
-            try {
-                String message = sampleCode.execute();
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.TEXT_PLAIN);
-                return new ResponseEntity<>(message, headers, HttpStatus.OK);
-            } catch (Exception exp) {
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                exp.printStackTrace(pw);
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.TEXT_PLAIN);
-                final String message = sw.toString();
-                return new ResponseEntity<>(message, headers, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        return notFound();
+        return codeType
+                .map(SampleCodeStatus::of)
+                .map(this::toResponseEntity)
+                .orElse(notFound());
     }
 
     private ResponseEntity<String> notFound() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
         return new ResponseEntity<>("Sorry, no sample code is available.", headers, HttpStatus.NOT_FOUND);
+    }
+
+    private ResponseEntity<String> toResponseEntity(SampleCodeStatus status) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        if (status.isSuccess()) {
+            return new ResponseEntity<>(status.getMessage(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(status.getMessage(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
