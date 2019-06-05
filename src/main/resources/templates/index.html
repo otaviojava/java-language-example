@@ -41,14 +41,14 @@
 
 <tr th:each="code: ${codes}">
     <details>
-        <summary>${user.name} Sample Code</summary>
+        <summary> [[${code.name}]] Sample Code</summary>
         <section>
             <h3>Source</h3>
-            ${code.source}
+            <span th:utext="${code.htmlSource}"></span>
         </section>
         <section>
             <h3>Output</h3>
-            ${code.output}
+            <span th:utext="${code.output}"></span>
         </section>
     </details>
 </tr>

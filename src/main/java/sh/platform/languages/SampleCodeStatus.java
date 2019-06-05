@@ -9,13 +9,16 @@ final class SampleCodeStatus {
 
     private final String source;
 
+    private final String htmlSource;
+
     private final String output;
 
     private final boolean success;
 
-    private SampleCodeStatus(String name, String source, String output, boolean success) {
-        this.name = name;
-        this.source = source;
+    private SampleCodeStatus(SampleCode sampleCode, String output, boolean success) {
+        this.name = sampleCode.getLabel();
+        this.source = sampleCode.getSource();
+        this.htmlSource = sampleCode.getHtmlSource();
         this.output = output;
         this.success = success;
     }
@@ -32,17 +35,24 @@ final class SampleCodeStatus {
         return success;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public String getHtmlSource() {
+        return htmlSource;
+    }
 
     public static SampleCodeStatus of(SampleCodeType type) {
         final SampleCode sampleCode = SampleCodeType.getSample(type);
         try {
             String output = sampleCode.execute();
-            return new SampleCodeStatus(type.getLabel(), sampleCode.getSource(), output, true);
+            return new SampleCodeStatus(sampleCode, output, true);
         } catch (Exception exp) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             exp.printStackTrace(pw);
-            return new SampleCodeStatus(type.getLabel(), sampleCode.getSource(), sw.toString(), false);
+            return new SampleCodeStatus(sampleCode, sw.toString(), false);
         }
     }
 
