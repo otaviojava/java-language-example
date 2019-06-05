@@ -5,24 +5,27 @@ import java.io.StringWriter;
 
 final class SampleCodeStatus {
 
-    private final SampleCodeType type;
+    private final String name;
 
-    private final String message;
+    private final String source;
+
+    private final String output;
 
     private final boolean success;
 
-    private SampleCodeStatus(SampleCodeType type, String message, boolean success) {
-        this.type = type;
-        this.message = message;
+    private SampleCodeStatus(String name, String source, String output, boolean success) {
+        this.name = name;
+        this.source = source;
+        this.output = output;
         this.success = success;
     }
 
-    public SampleCodeType getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public String getMessage() {
-        return message;
+    public String getOutput() {
+        return output;
     }
 
     public boolean isSuccess() {
@@ -33,13 +36,13 @@ final class SampleCodeStatus {
     public static SampleCodeStatus of(SampleCodeType type) {
         final SampleCode sampleCode = SampleCodeType.getSample(type);
         try {
-            String message = sampleCode.execute();
-            return new SampleCodeStatus(type, message, true);
+            String output = sampleCode.execute();
+            return new SampleCodeStatus(type.getLabel(), sampleCode.getSource(), output, true);
         } catch (Exception exp) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             exp.printStackTrace(pw);
-            return new SampleCodeStatus(type, sw.toString(), false);
+            return new SampleCodeStatus(type.getLabel(), sampleCode.getSource(), sw.toString(), false);
         }
     }
 
