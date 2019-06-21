@@ -30,7 +30,7 @@ public class InfluxdbSample implements Supplier<String> {
             logger.append(String.format("Response time: %s and version %s", response.getResponseTime(),
                     response.getVersion())).append('\n');
 
-            influxDB.query(new Query("CREATE USER admin WITH PASSWORD password WITH ALL PRIVILEGES"));
+            influxDB.query(new Query("CREATE USER admin WITH PASSWORD 'password' WITH ALL PRIVILEGES"));
             influxDB.close();
 
             influxDB = credential.get("admin", "password");
