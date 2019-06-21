@@ -60,7 +60,19 @@ services:
     ports:
       - 11211:11211
 
+  influxdb:
+    image: "influxdb:latest"
+    networks:
+      - javanet
+    ports:
+      - 8086:8086
 
+  rabbit:
+    image: "rabbitmq:3.7-rc"
+    networks:
+      - javanet
+    ports:
+      - 5672:15672
 
 networks:
   javanet:

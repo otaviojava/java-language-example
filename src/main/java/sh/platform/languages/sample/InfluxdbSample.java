@@ -34,9 +34,9 @@ public class InfluxdbSample implements Supplier<String> {
             influxDB.close();
 
             influxDB = credential.get("admin", "password");
-            influxDB.enableBatch(100, 200, TimeUnit.MILLISECONDS);
             influxDB.query(new Query("CREATE DATABASE server"));
 
+            influxDB.setDatabase("server");
             // Write data
             Point point = Point.measurement("memory")
                     .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)

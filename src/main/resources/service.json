@@ -58,5 +58,21 @@
       "path": "solr/people",
       "port": 8983
     }
+  ],
+  "influxdb": [
+    {
+      "hostname": "localhost",
+      "host": "localhost",
+      "port": 8086
+    }
+  ],
+  "rabbitmq": [
+    {
+      "username": "guest",
+      "hostname": "localhost",
+      "host": "localhost",
+      "password": "guest",
+      "port": 5432
+    }
   ]
 }
