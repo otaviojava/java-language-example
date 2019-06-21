@@ -23,8 +23,8 @@ public class RabbitMQSample implements Supplier<String> {
         Config config = new Config();
         try {
             //Get the credentials to connect to the RabbitMQ service.
-            final RabbitMQ kafka = config.getCredential("rabbitmq", RabbitMQ::new);
-            final ConnectionFactory connectionFactory = kafka.get();
+            final RabbitMQ credential = config.getCredential("rabbitmq", RabbitMQ::new);
+            final ConnectionFactory connectionFactory = credential.get();
 
             //Connect to the RabbitMQ server
             final Connection connection = connectionFactory.createConnection();
