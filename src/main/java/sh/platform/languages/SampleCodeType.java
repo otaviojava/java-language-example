@@ -27,8 +27,9 @@ public enum SampleCodeType {
     MEMCACHED(new MemcachedSample(), "Memcached"),
     ELASTICSEARCH(new ElasticsearchSample(), "Elasticsearch"),
     INFLUX_DB(new InfluxdbSample(), "InfluxDB"),
-   RABBITMQS(new RabbitMQSample(), "RabbitMQ");
-//    KAFKA(new KafkaSample(), "Kafka"),;
+    RABBITMQS(new RabbitMQSample(), "RabbitMQ"),
+    SOLR(new SolrSample(), "Solr"),
+    KAFKA(new KafkaSample(), "Kafka");
 
     private final Supplier<String> demoClass;
     private final String label;
