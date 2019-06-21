@@ -49,7 +49,7 @@ public class InfluxdbSample implements Supplier<String> {
             influxDB.write(point);
 
             //read data
-            QueryResult result = influxDB.query(new Query("select * from memory LIMIT 5"));
+            QueryResult result = influxDB.query(new Query("select * from memory LIMIT 5", "server"));
             final List<List<QueryResult.Series>> collect = result.getResults().stream()
                     .map(QueryResult.Result::getSeries)
                     .collect(Collectors.toList());
