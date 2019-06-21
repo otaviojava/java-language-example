@@ -5,11 +5,14 @@ import sh.platform.config.RabbitMQ;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 public class RabbitMQSample implements Supplier<String> {
@@ -28,18 +31,19 @@ public class RabbitMQSample implements Supplier<String> {
 
             //Connect to the RabbitMQ server
             final Connection connection = connectionFactory.createConnection();
+            connection.start();
             final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Queue queue = session.createTemporaryQueue();
+            Queue queue = session.createQueue("cloud");
+            MessageConsumer consumer = session.createConsumer(queue);
             TextMessage textMessage = session.createTextMessage("Platform.sh");
             textMessage.setJMSReplyTo(queue);
             MessageProducer producer = session.createProducer(queue);
             producer.send(textMessage);
 
             //Receive the message
-            MessageConsumer consumer = session.createConsumer(queue);
-            TextMessage replyMsg = (TextMessage) consumer.receive();
+            TextMessage replyMsg = (TextMessage) consumer.receive(100);
 
-            logger.append("Message ").append(replyMsg.getText());
+            logger.append("Message: ").append(replyMsg.getText());
 
             //close connections
             producer.close();

@@ -72,7 +72,7 @@
       "hostname": "localhost",
       "host": "localhost",
       "password": "guest",
-      "port": 5432
+      "port": 5672
     }
   ]
 }
