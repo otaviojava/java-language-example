@@ -27,7 +27,7 @@ public class InfluxdbSample implements Supplier<String> {
             //Get the credentials to connect to the InfluxDB service.
             final org.influxdb.InfluxDB influxDB = credential.get();
             Pong response = influxDB.ping();
-            logger.append(String.format("Response time: %s and version %d", response.getResponseTime(),
+            logger.append(String.format("Response time: %s and version %s", response.getResponseTime(),
                     response.getVersion())).append('\n');
 
             influxDB.enableBatch(100, 200, TimeUnit.MILLISECONDS);
