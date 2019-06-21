@@ -1,6 +1,7 @@
 package sh.platform.languages.sample;
 
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -44,15 +45,19 @@ public class KafkaSample implements Supplier<String> {
                     .append(" with offset ").append(metadata.offset()).append('\n');
 
             //Consumer
-            Consumer<Long, String> consumer = kafka.getConsumer(new HashMap<>(), "animals");
+            final HashMap<String, Object> configConsumer = new HashMap<>();
+            configConsumer.put(ConsumerConfig.GROUP_ID_CONFIG, "consumerGroup1");
+            configConsumer.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+            Consumer<Long, String> consumer = kafka.getConsumer(configConsumer, "animals");
             ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofSeconds(3));
 
             //print each record.
             consumerRecords.forEach(record -> {
-                logger.append(" Record Key " + record.key());
-                logger.append(" Record value " + record.value());
-                logger.append(" Record partition " + record.partition());
-                logger.append(" Record offset " + record.offset()).append('\n');
+                logger.append("Record: Key " + record.key());
+                logger.append(" value " + record.value());
+                logger.append(" partition " + record.partition());
+                logger.append(" offset " + record.offset()).append('\n');
             });
 
             // commits the offset of record to broker.

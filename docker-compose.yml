@@ -75,5 +75,25 @@ services:
       - 5672:5672
       - 15672:15672
 
+  zookeeper:
+    image: "confluent/zookeeper"
+    networks:
+      - javanet
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: "confluent/kafka"
+    networks:
+      - javanet
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_PORT=9092
+    depends_on:
+      - zookeeper
+
 networks:
   javanet:
