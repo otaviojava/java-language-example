@@ -29,7 +29,7 @@ public class RabbitMQSample implements Supplier<String> {
             //Connect to the RabbitMQ server
             final Connection connection = connectionFactory.createConnection();
             final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Queue queue = session.createQueue("cloud");
+            Queue queue = session.createTemporaryQueue();
             TextMessage textMessage = session.createTextMessage("Platform.sh");
             textMessage.setJMSReplyTo(queue);
             MessageProducer producer = session.createProducer(queue);

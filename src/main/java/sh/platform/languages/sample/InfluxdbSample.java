@@ -25,11 +25,15 @@ public class InfluxdbSample implements Supplier<String> {
 
             final InfluxDB credential = config.getCredential("influxdb", InfluxDB::new);
             //Get the credentials to connect to the InfluxDB service.
-            final org.influxdb.InfluxDB influxDB = credential.get();
+            org.influxdb.InfluxDB influxDB = credential.get();
             Pong response = influxDB.ping();
             logger.append(String.format("Response time: %s and version %s", response.getResponseTime(),
                     response.getVersion())).append('\n');
 
+            influxDB.query(new Query("CREATE USER admin-user WITH password WITH ALL PRIVILEGES"));
+            influxDB.close();
+
+            influxDB = credential.get("admin-user", "password");
             influxDB.enableBatch(100, 200, TimeUnit.MILLISECONDS);
             influxDB.query(new Query("CREATE DATABASE server"));
 
@@ -44,6 +48,7 @@ public class InfluxdbSample implements Supplier<String> {
 
             influxDB.write(point);
 
+            //read data
             QueryResult result = influxDB.query(new Query("select * from memory LIMIT 5"));
             final List<List<QueryResult.Series>> collect = result.getResults().stream()
                     .map(QueryResult.Result::getSeries)
