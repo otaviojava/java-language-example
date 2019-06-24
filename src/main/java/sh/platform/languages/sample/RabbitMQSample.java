@@ -32,6 +32,7 @@ public class RabbitMQSample implements Supplier<String> {
             final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = session.createQueue("cloud");
             MessageConsumer consumer = session.createConsumer(queue);
+
             // Sending a message into the queue.
             TextMessage textMessage = session.createTextMessage("Platform.sh");
             textMessage.setJMSReplyTo(queue);
